@@ -5,19 +5,21 @@
 void setup() {
   Serial.begin(115200);
   pinMode(MQ7_HEAT_PIN, OUTPUT);
-  delay(40000);
+  delay(10000);
   Serial.println("End Setup");
 }
 
 void loop() {
-  // **Fase alta - 5V por 60 segundos**
-  Serial.println("SET PIN 25 HIGH");
-  digitalWrite(MQ7_HEAT_PIN, HIGH);
-  delay(60000);  // Esperar 60 segundos
-
-  // **Fase baja - 1.4V por 90 segundos**
+  // **Fase alta - 5V en el MQ7 por 60 segundos**
+  //**la salida esta conectada al Gate de un MOSFET que no conduce , el MQ7 recibe 5V */
   Serial.println("SET PIN 25 LOW");
   digitalWrite(MQ7_HEAT_PIN, LOW);
+  delay(60000);  // Esperar 60 segundos
+
+  // **Fase baja - 1.4V en el MQ7 por 90 segundos**
+  //la salida saca 0V lo que cierra el MOSFET y el MQ se alimenta con la salida del LM317T
+  Serial.println("SET PIN 25 HIGH");
+  digitalWrite(MQ7_HEAT_PIN, HIGH);
   delay(90000);  // Esperar 90 segundos
 
   // **Lectura del sensor**
